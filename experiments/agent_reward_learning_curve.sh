@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # This script plots the learning curve of the agent rewards in the following files
-# Current working directory should be
-# the plots are saved to the current working directory
 
 PYPATH="learning_curve/"
 
