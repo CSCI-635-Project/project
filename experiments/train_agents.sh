@@ -10,25 +10,20 @@ export SUPPRESS_MA_PROMPT=1
 NUM_UNITS=128
 NUM_EPISODES=25000
 function run_exp() {
-    python train.py --scenario $EXP_NAME --exp-name baseline_$EXP_NAME --save-dir temp/policies/baseline_$EXP_NAME --num-units $NUM_UNITS --num-episodes $NUM_EPISODES
+    python train.py --scenario $EXP_NAME --exp-name baseline_$EXP_NAME --save-dir temp/policies/baseline_$EXP_NAME --num-adversaries $NUM_ADV --num-units $NUM_UNITS --num-episodes $NUM_EPISODES
 }
-
-# Cooperative communication
-EXP_NAME="simple_reference"
-run_exp
 
 # Cooperative navigation
 EXP_NAME="simple_spread"
+NUM_ADV=0
 run_exp
 
 # Predator-prey
 EXP_NAME="simple_tag"
+NUM_ADV=3
 run_exp
 
 # Physical deception
 EXP_NAME="simple_adversary"
-run_exp
-
-# Crypto
-EXP_NAME="simple_crypto"
+NUM_ADV=1
 run_exp
