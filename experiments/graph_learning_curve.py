@@ -6,18 +6,9 @@ import numpy as np
 def main():
 
     rewards_fname = sys.argv[1]
-    rewards_file = open(rewards_fname, "r")
-
-    rewards = []
-    for value in rewards_file.readlines():
-        value.strip()
-        new_value = value.replace("[", "")
-        new_value = new_value.replace("]", "")
-        new_value = new_value.replace(",", "")
-
-        rewards.append(float(new_value))
+    rewards_file = open(rewards_fname, "rb")
+    rewards = pickle.load(rewards_file)
     reward_arry = np.array(rewards)
-
 
     NUM_EPISODES=25000
 
