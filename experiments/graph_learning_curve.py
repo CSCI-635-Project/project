@@ -1,4 +1,5 @@
 import sys
+import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,6 +11,7 @@ def main():
     rewards = pickle.load(rewards_file)
     reward_arry = np.array(rewards)
 
+
     NUM_EPISODES=25000
 
     xpoints_rewrds = []
@@ -19,16 +21,15 @@ def main():
             ep_offset += NUM_EPISODES/len(rewards)
             if ep_offset <= NUM_EPISODES:
                 xpoints_rewrds.append(ep_offset)
-    #print(xpoints_rewrds)
 
-    title = rewards_fname.replace(".pkl", "")
+    title = rewards_fname.replace("learning_curve/", "")
+    title = title.replace(".pkl", "")
 
     graph_title = "Training Curve for " + title
     plt.title(graph_title)
     plt.xlabel("Number of Episodes")
     plt.ylabel("Agent Rewards")
     plt.plot(xpoints_rewrds, reward_arry)
-    #plt.show()
     out_fig_name = title + "_training_curve"
     plt.savefig(out_fig_name)
     plt.close()
