@@ -88,11 +88,11 @@ def get_trainers(env, num_adversaries, obs_shape_n, arglist):
     for i in range(num_adversaries):
         trainers.append(trainer(
             "agent_%d" % i, model, obs_shape_n, env.action_space, i, arglist,
-            local_q_func=(arglist.adv_policy=='ddpg'), preprocessors=preprocessors, preproc_idx=preproc_idx))
+            local_q_func=(arglist.adv_policy=='ddpg'), preprocessors=(preprocessors if arglist.adv_policy=="preprocess" else None), preproc_idx=preproc_idx))
     for i in range(num_adversaries, env.n):
         trainers.append(trainer(
             "agent_%d" % i, model, obs_shape_n, env.action_space, i, arglist,
-            local_q_func=(arglist.good_policy=='ddpg'), preprocessors=preprocessors, preproc_idx=preproc_idx))
+            local_q_func=(arglist.good_policy=='ddpg'), preprocessors=(preprocessors if arglist.adv_policy=="preprocess" else None), preproc_idx=preproc_idx))
     return trainers
 
 

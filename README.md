@@ -1,13 +1,57 @@
-# Multi-Agent Deep Deterministic Policy Gradient (MADDPG)
+# CS635 Final Project
 
-This is the code for implementing the MADDPG algorithm presented in the paper:
+Our code is derived from the original repository for the paper
 [Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments](https://arxiv.org/pdf/1706.02275.pdf).
-It is configured to be run in conjunction with environments from the
+It uses
 [Multi-Agent Particle Environments (MPE)](https://github.com/openai/multiagent-particle-envs).
-Note: this codebase has been restructured since the original paper, and the results may
-vary from those reported in the paper.
+to evaluate changes.
+After the updated installation instructions, the rest of this README is almost verbatim from the original source.
 
-**Update:** the original implementation for policy ensemble and policy estimation can be found [here](https://www.dropbox.com/s/jlc6dtxo580lpl2/maddpg_ensemble_and_approx_code.zip?dl=0). The code is provided as-is. 
+In our project, we implemented a permutation invariant architecture to scalably
+process observations and actions from multiple agents. The environments we
+trained on were `simple_spread`, `simple_tag`, and `simple_adversary`.
+- `simple_spread` is a pure cooperative task where agents attempt to cover all
+landmarks in the environment without colliding with each other.
+- `simple_tag` is a mixed environment where multiple prey must avoid a predator.
+- `simple_adversary` is a mixed environment where one team must attempt to cover
+the correct landmark which is only visible to them, while the other team must
+guess which landmark is the correct landmark and cover it instead.
+
+Our experiments make use of baseline networks, which are 2-layer MLPs with 128
+neurons per hidden layer, and permutation invariant networks, which use a
+special permutation invariant architecture for processing multiple agent
+observations/actions per team. Each permutation invariant block uses 3 1D
+convolutional layers with a kernel size of 1 to simulate processing each agent's
+observations and actions via an MLP individually. The output of these operations
+are then averaged across all agents to produce a single vector per team. Each
+"team vector" is concatenated, then passed to the original baseline
+architecture. We do not take into account the increased number of parameters
+this modification brings.
+
+The experiments were performed on `lovegood`, on a Tesla T4 GPU.
+
+## Quickstart
+
+Navigate to the `experiments` folder in this repository. Then, create the folders `benchmark_files`, `learning_curves`, and `temp/policies`.
+
+```bash
+cd experiments
+mkdir benchmark_files learning_curves temp temp/policies
+```
+
+Next, run `train_agents.sh`. This trains baseline policies and permutation
+invariant policies for all environments. For mixed environments (`simple_tag`
+and `simple_adversary`), the script will also train in a setting where one team
+uses the baseline network architecture, while the other team uses the modified
+architecture. This script will take several hours to run.
+
+```bash
+./train_agents.sh
+```
+
+Once the agents are trained, you'll be able to see trained policies in `temp/policies`.
+
+TODO: Create script to generate benchmark data
 
 ## Installation
 
@@ -50,10 +94,10 @@ by following the `README`.
 - `--num-adversaries`: number of adversaries in the environment (default: `0`)
 
 - `--good-policy`: algorithm used for the 'good' (non adversary) policies in the environment
-(default: `"maddpg"`; options: {`"maddpg"`, `"ddpg"`})
+(default: `"maddpg"`; options: {`"maddpg"`, `"ddpg"`, `"preprocess"` **(NEW!)**})
 
 - `--adv-policy`: algorithm used for the adversary policies in the environment
-(default: `"maddpg"`; options: {`"maddpg"`, `"ddpg"`})
+(default: `"maddpg"`; options: {`"maddpg"`, `"ddpg"`, `"preprocess"` **(NEW!)**})
 
 ### Core training parameters
 
@@ -104,18 +148,3 @@ has been provided), but does not continue training (default: `False`)
 - `./maddpg/common/distributions.py`: useful distributions used in `maddpg.py`
 
 - `./maddpg/common/tf_util.py`: useful tensorflow functions used in `maddpg.py`
-
-
-
-## Paper citation
-
-If you used this code for your experiments or found it helpful, consider citing the following paper:
-
-<pre>
-@article{lowe2017multi,
-  title={Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments},
-  author={Lowe, Ryan and Wu, Yi and Tamar, Aviv and Harb, Jean and Abbeel, Pieter and Mordatch, Igor},
-  journal={Neural Information Processing Systems (NIPS)},
-  year={2017}
-}
-</pre>
