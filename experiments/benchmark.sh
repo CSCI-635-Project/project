@@ -50,7 +50,7 @@ GOOD_POLICY="maddpg"
 ADV_POLICY="preprocess"
 run_benchmark
 
-Physical deception
+# Physical deception
 GOOD_POLICY="maddpg"
 ADV_POLICY="maddpg"
 EXP_NAME="simple_adversary"
