@@ -10,7 +10,7 @@ export SUPPRESS_MA_PROMPT=1
 NUM_UNITS=128
 NUM_EPISODES=25000
 function run_exp() {
-    if [[ $EXP_TYPE == "preprocess" ]]; then
+    if [[ $EXP_TYPE == "preprocessed" ]]; then
         PP="--preprocess"
     else
         PP=""
@@ -52,7 +52,7 @@ GOOD_POLICY="maddpg"
 ADV_POLICY="preprocess"
 run_exp
 
-# Physical deception
+Physical deception
 GOOD_POLICY="maddpg"
 ADV_POLICY="maddpg"
 EXP_NAME="simple_adversary"
