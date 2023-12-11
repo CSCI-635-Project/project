@@ -5,7 +5,7 @@
 PYPATH="learning_curve/"
 
 function plt_learning_curves(){
-    python3 graph_learning_curve.py $PYPATH$PKL_FILE
+    python3 graph_learning_curve_single.py $PYPATH$PKL_FILE
 }
 
 PKL_FILE="baseline_simple_adversary_agrewards.pkl"
