@@ -51,7 +51,17 @@ architecture. This script will take several hours to run.
 
 Once the agents are trained, you'll be able to see trained policies in `temp/policies`.
 
-TODO: Create script to generate benchmark data
+To generate benchmark data, run `benchmark.sh`.
+
+```bash
+./benchmark.sh
+```
+
+The data will show up in `benchmark_files`.
+
+`our_data_agent_reward_learning_curve.sh` and
+`training_agent_reward_learning_curve.sh` generates learning curves for baseline
+and modified agents, respectively.
 
 ## Installation
 
