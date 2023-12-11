@@ -5,7 +5,7 @@
 PYPATH="new_data_training/"
 
 function plt_learning_curves(){
-    python3 graph_learning_curve.py $PYPATH$PKL_FILE
+    python3 graph_learning_curve_single.py $PYPATH$PKL_FILE
 }
 
 PKL_FILE="good_linear_adv_preprocessed_simple_adversary_agrewards.pkl"
