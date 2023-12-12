@@ -21,6 +21,11 @@ def main():
     preprocessed = pickle.load(preprocessed_file)
     preprocessed_arry = np.array(preprocessed)
 
+    pre_simple_fname = sys.argv[4]
+    pre_simple_file = open(pre_simple_fname, "rb")
+    pre_simple = pickle.load(pre_simple_file)
+    simple_arry = np.array(pre_simple)
+
 
     NUM_EPISODES=25000
 
@@ -42,8 +47,9 @@ def main():
     plt.xlabel("Number of Episodes")
     plt.ylabel("Agent Rewards")
     plt.plot(xpoints_rewrds, reward_arry, label="Baseline")
-    plt.plot(xpoints_rewrds, preprocessed_arry, label="Good Prerpocessed")
+    plt.plot(xpoints_rewrds, preprocessed_arry, label="Good Preprocessed")
     plt.plot(xpoints_rewrds, linear_arry, label="Good Linear Adv")
+    plt.plot(xpoints_rewrds, simple_arry, label="Preprocessed Simple")
     plt.legend()
     out_fig_name = title + "_learning_curve"
     plt.savefig(out_fig_name)
