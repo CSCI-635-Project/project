@@ -79,11 +79,8 @@ def make_env(scenario_name, arglist, benchmark=False):
 def get_trainers(env, num_adversaries, obs_shape_n, arglist):
     trainers = []
     model = mlp_model
-    preprocessors = None
-    preproc_idx = None
-    if arglist.preprocess:
-        preprocessors = [deepset_block, deepset_block] # Set up a deepset block for each team
-        preproc_idx = [0 for _ in range(num_adversaries)] + [1 for _ in range(env.n - num_adversaries)]
+    preprocessors = [deepset_block, deepset_block] # Set up a deepset block for each team
+    preproc_idx = [0 for _ in range(num_adversaries)] + [1 for _ in range(env.n - num_adversaries)]
     trainer = MADDPGAgentTrainer
     for i in range(num_adversaries):
         trainers.append(trainer(
